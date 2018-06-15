@@ -2,7 +2,7 @@
 
 from __future__ import print_function
 from pycocotools.coco import COCO
-import cPickle as pkl
+import pickle as pkl
 import os.path
 import json
 import warnings
@@ -42,7 +42,7 @@ class Refexp:
             # Convert string keys to integers for images, annotations, refexps.
             def _convert(dataset_key):
                 converted = {}
-                for k, v in self.dataset[dataset_key].iteritems():
+                for k, v in self.dataset[dataset_key].items():
                     converted[int(k)] = v
                 self.dataset[dataset_key] = converted
             _convert('images')
@@ -65,7 +65,7 @@ class Refexp:
             annToImgId = {}
             # Set of all category ids in the dataset.
             catIds = set([])
-            for ann_id, ann in self.dataset['annotations'].iteritems():
+            for ann_id, ann in self.dataset['annotations'].items():
                 if ann['category_id'] not in catIds:
                     catIds.add(ann['category_id'])
                 # Check 1:1 relation.
@@ -286,7 +286,7 @@ class Refexp:
         tokens = tokens if isinstance(tokens, list) else [tokens]
         tokensSet = set(tokens)
         refexps_ids = set([])
-        for ref_id, ref in self.dataset['refexps'].iteritems():
+        for ref_id, ref in self.dataset['refexps'].items():
             if (set(ref['tokens']).issuperset(tokensSet) 
                     and len(ref['tokens']) >= len_min
                     and (len_max == -1 or len(ref['tokens']) <= len_max)
